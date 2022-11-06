@@ -1,15 +1,10 @@
+import { Message } from "./message";
+
 export interface ServerToClientEvents {
-  'receive-message': (message: string) => void;
+  'receive-messages': (messages: Message[]) => void;
+  'receive-message': (message: Message) => void;
 }
 
 export interface ClientToServerEvents {
-  'send-message': (message: string, room: string) => void
-}
-
-export interface InterServerEvents {
-  ping: () => void;
-}
-
-export interface SocketData {
-  content: string;
+  'send-message': (content: string) => void
 }
