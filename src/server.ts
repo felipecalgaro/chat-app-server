@@ -13,7 +13,9 @@ const io = new Server<
 
 const prisma = new PrismaClient()
 
-io.on('connection', async (socket) => {
+io.on('connection', (socket) => {
+  io.emit('connected', socket.id)
+
   socket.on('send-message', async (content) => {
     const message = await prisma.message.create({
       data: {
@@ -23,5 +25,9 @@ io.on('connection', async (socket) => {
     })
 
     io.emit('receive-message', message)
+  })
+
+  socket.on("disconnect", () => {
+    io.emit('disconnected', socket.id)
   })
 })
